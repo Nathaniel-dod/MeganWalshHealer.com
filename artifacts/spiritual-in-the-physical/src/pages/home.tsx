@@ -17,6 +17,14 @@ type Service =
   | 'Ordained Ministry'
   | 'General enquiry';
 
+const ONLINE_SERVICES: readonly Service[] = [
+  'Perfect Day Consults',
+  'Mediumship Readings',
+  'Intuitive Tarot Readings',
+];
+const serviceFormat = (service: Service) =>
+  ONLINE_SERVICES.includes(service) ? 'Online' : 'In person';
+
 const SERVICES: { name: Exclude<Service, 'General enquiry'>; blurb: string }[] = [
   { name: 'Wolfe Non Surgical', blurb: 'Wolfe Non Surgical is a focused, hands-on bodywork approach centred on areas of physical restriction. It focuses on scar tissue, inflammation, calcification and crystallization that may contribute to discomfort and limited movement. The aim is to support greater comfort, mobility and freedom of movement without surgery. Get in touch to discuss the areas you would like support with and what a session may involve.' },
   { name: 'CellSonic Regeneration', blurb: 'CellSonic Regeneration uses Extracorporeal Shock Wave Therapy (ESWT): focused acoustic waves applied from outside the body. This non-invasive approach is designed to complement the body’s natural tissue-recovery processes and support comfort, mobility and recovery. It may also support circulation and a healthy inflammatory response. Get in touch to discuss your goals and whether this approach may be appropriate for you.' },
@@ -52,8 +60,8 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
 function Mark({ className = '' }: { className?: string }) {
   // Logo crop: show infinity loops only; wordmark is set in live type.
   return (
-    <div className={`overflow-hidden ${className}`} aria-hidden="true">
-      <img src={LOGO} alt="" className="w-full" style={{ clipPath: 'inset(0 0 33% 0)', marginBottom: '-33%' }} />
+    <div className={`relative aspect-[1000/450] shrink-0 overflow-hidden ${className}`} aria-hidden="true">
+      <img src={LOGO} alt="" className="absolute left-0 top-0 h-auto w-full max-w-none" />
     </div>
   );
 }
@@ -101,11 +109,11 @@ export default function Home() {
     <div className="grain relative min-h-[100dvh] overflow-x-clip bg-background font-sans text-foreground">
       <header className="fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <a href="#top" className="flex items-center gap-2" data-testid="link-home">
+          <a href="#top" className="mr-3 flex min-w-0 items-center gap-2" data-testid="link-home">
             <Mark className="w-12" />
-            <span className="font-serif text-lg font-bold leading-none text-primary">Spiritual in the Physical</span>
+            <span className="min-w-0 font-serif text-base font-bold leading-tight text-primary sm:text-lg">Spiritual in the Physical</span>
           </a>
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden shrink-0 items-center gap-8 md:flex">
             {NAV.map(([l, h]) => (
               <a key={h} href={h} className="text-sm text-muted-foreground transition hover:text-primary" data-testid={`link-nav-${l.toLowerCase()}`}>
                 {l}
@@ -115,7 +123,7 @@ export default function Home() {
               Say hello
             </a>
           </nav>
-          <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open} data-testid="button-menu">
+          <button className="flex h-10 w-10 shrink-0 items-center justify-center md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open} data-testid="button-menu">
             {open ? <X /> : <Menu />}
           </button>
         </div>
@@ -170,7 +178,8 @@ export default function Home() {
             <Reveal>
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-accent">Services</p>
               <h2 className="mt-3 max-w-xl font-serif text-4xl font-bold tracking-tight text-primary sm:text-5xl">Ways we can work together</h2>
-              <p className="mt-5 text-muted-foreground">Choose a service below to explore the details.</p>
+              <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground">Perfect Day Consults, Mediumship Readings and Intuitive Tarot Readings are offered online. All other services are offered in person in Michigan and surrounding areas.</p>
+              <p className="mt-3 text-sm text-muted-foreground">Choose a service below to explore the details.</p>
             </Reveal>
             <div className="mt-12 border-t-2 border-primary">
               {SERVICES.map((s, i) => (
@@ -178,10 +187,14 @@ export default function Home() {
                   <details className="group border-b border-border" data-testid={`card-service-${i}`}>
                     <summary className="flex cursor-pointer list-none items-center gap-5 py-7 outline-none transition hover:bg-secondary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 [&::-webkit-details-marker]:hidden md:gap-10">
                       <span className="w-10 shrink-0 font-serif text-3xl font-bold text-accent" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                      <h3 className="flex-1 font-serif text-xl font-bold text-primary sm:text-2xl">{s.name}</h3>
+                      <div className="flex-1">
+                        <h3 className="font-serif text-xl font-bold text-primary sm:text-2xl">{s.name}</h3>
+                        <span className="mt-2 inline-block rounded border border-border bg-secondary px-2.5 py-1 font-sans text-xs font-semibold text-primary">{serviceFormat(s.name)}</span>
+                      </div>
                       <ChevronDown className="mr-2 h-6 w-6 shrink-0 text-primary transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
                     </summary>
                     <div className="pb-8 pl-[3.75rem] md:pl-20">
+                      <p className="mb-3 text-sm font-semibold text-primary">{serviceFormat(s.name) === 'Online' ? 'Available online.' : 'Available in person in Michigan and surrounding areas.'}</p>
                       <p className="max-w-3xl leading-relaxed text-muted-foreground">{s.blurb}</p>
                       <button onClick={() => choose(s.name)} className="mt-6 inline-flex items-center gap-2 rounded-md border-2 border-primary px-5 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground" data-testid={`button-enquire-${i}`}>
                         Enquire about this <ArrowRight className="h-4 w-4" />
@@ -224,6 +237,7 @@ export default function Home() {
                 Tell me a little about <em className="text-accent">you</em>
               </h2>
               <p className="mt-6 text-muted-foreground">Send a note and choose the service you are curious about. There is no obligation.</p>
+              <p className="mt-4 leading-relaxed text-muted-foreground">Online: Perfect Day Consults, Mediumship Readings and Intuitive Tarot Readings. For all other services, I welcome in-person enquiries in Michigan and surrounding areas.</p>
               <p className="mt-6 rounded-md border-l-4 border-accent bg-secondary p-4 text-sm text-secondary-foreground" data-testid="text-storage-note">
                 Please note: enquiries are stored only. Email notifications are not yet connected, so a reply may not be immediate. Do not include sensitive health information.
               </p>
@@ -241,10 +255,16 @@ export default function Home() {
                 <div>
                   <label htmlFor="service" className="mb-1.5 block text-sm font-semibold">Service</label>
                   <select id="service" value={service} onChange={(e) => setService(e.target.value as Service)} className={field} data-testid="select-service">
-                    {[...SERVICES.map((s) => s.name), 'General enquiry'].map((s) => (
-                      <option key={s} value={s}>{s}</option>
+                    {SERVICES.map((s) => (
+                      <option key={s.name} value={s.name}>{s.name} — {serviceFormat(s.name)}</option>
                     ))}
+                    <option value="General enquiry">General enquiry</option>
                   </select>
+                  {service !== 'General enquiry' && (
+                    <p className="mt-2 text-sm text-muted-foreground" aria-live="polite">
+                      {serviceFormat(service) === 'Online' ? 'This service is offered online.' : 'This service is offered in person in Michigan and surrounding areas.'}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="message" className="mb-1.5 block text-sm font-semibold">Message</label>

@@ -36,6 +36,7 @@ A one-page practitioner website introducing services and collecting general enqu
 ## Product
 
 - Required page sequence: hero → services → about → contact form → footer.
+- Online services are Perfect Day Consults, Mediumship Readings and Intuitive Tarot Readings. All other services are in person in Michigan and surrounding areas, as specified by the user.
 - The practitioner is Meghan Walsh. The user supplied her portrait, a celestial hero background, the infinity logo, and first-person spiritual service copy.
 - Services: CellSonic Regeneration, Wolfe Non Surgical, Perfect Day Consults, Reiki Healing, Palm Readings, Intuitive Tarot Readings, Mediumship Readings, and Ordained Ministry.
 - The user designated docofdetoxtreatments.com as the source for WNS, CellSonic and Perfect Day descriptions. Adapt service explanations without importing other practitioners' credentials, pricing, session duration or lifetime-support offers.
