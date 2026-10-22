@@ -61,7 +61,7 @@ components:
           maxLength: 254
         service:
           type: string
-          enum: [CellSonic Regeneration, Wolfe Non Surgical, Perfect Day Consults, General enquiry]
+          enum: [CellSonic Regeneration, Wolfe Non Surgical, Perfect Day Consults, Reiki Healing, Palm Readings, Intuitive Tarot Readings, Mediumship Readings, Ordained Ministry, General enquiry]
         message:
           type: string
           minLength: 1

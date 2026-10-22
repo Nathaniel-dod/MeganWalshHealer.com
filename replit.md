@@ -36,13 +36,15 @@ A one-page practitioner website introducing services and collecting general enqu
 ## Product
 
 - Required page sequence: hero → services → about → contact form → footer.
-- The user supplied the pastel infinity logo and named CellSonic Regeneration, Wolfe Non Surgical, and Perfect Day Consults.
-- Additional services and service details will be provided by the user. Practitioner biography is also pending; placeholder copy must stay identifiable.
+- The practitioner is Meghan Walsh. The user supplied her portrait, a celestial hero background, the infinity logo, and first-person spiritual service copy.
+- Services: CellSonic Regeneration, Wolfe Non Surgical, Perfect Day Consults, Reiki Healing, Palm Readings, Intuitive Tarot Readings, Mediumship Readings, and Ordained Ministry.
+- The user designated docofdetoxtreatments.com as the source for WNS, CellSonic and Perfect Day descriptions. Adapt service explanations without importing other practitioners' credentials, pricing, session duration or lifetime-support offers.
+- Wolfe Non Surgical, CellSonic Regeneration and Perfect Day Consults must appear first, ahead of the spiritual services. Use an expandable description for each service.
 
 ## User preferences
 
 - Edit the website directly in Build mode rather than using the Design canvas.
-- Use the supplied logo's pastel pink, lilac, and blue direction on a light background.
+- The user rejected the initial "cotton candy" look and weak fonts. Use stronger typography and a more grounded treatment, with the supplied celestial image as the hero background.
 
 ## Gotchas
 

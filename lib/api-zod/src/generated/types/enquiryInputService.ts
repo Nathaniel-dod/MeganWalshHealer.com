@@ -13,5 +13,10 @@ export const EnquiryInputService = {
   CellSonic_Regeneration: 'CellSonic Regeneration',
   Wolfe_Non_Surgical: 'Wolfe Non Surgical',
   Perfect_Day_Consults: 'Perfect Day Consults',
+  Reiki_Healing: 'Reiki Healing',
+  Palm_Readings: 'Palm Readings',
+  Intuitive_Tarot_Readings: 'Intuitive Tarot Readings',
+  Mediumship_Readings: 'Mediumship Readings',
+  Ordained_Ministry: 'Ordained Ministry',
   General_enquiry: 'General enquiry',
 } as const;

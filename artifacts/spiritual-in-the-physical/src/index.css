@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Figtree:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..800;1,9..144,500..700&family=Manrope:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -79,13 +79,13 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.08);
 
-  --background: 320 45% 98%;
+  --background: 40 33% 95%;
 
-  --foreground: 236 38% 20%;
+  --foreground: 232 40% 14%;
 
-  --border: 265 40% 88%;
+  --border: 36 20% 80%;
 
-  --card: 320 60% 99%;
+  --card: 40 33% 97%;
 
   --card-foreground: 236 38% 20%;
 
@@ -113,19 +113,19 @@
 
   --popover-border: 265 40% 88%;
 
-  --primary: 236 52% 46%;
+  --primary: 232 45% 22%;
 
-  --primary-foreground: 320 60% 99%;
+  --primary-foreground: 40 33% 96%;
 
-  --secondary: 270 60% 92%;
+  --secondary: 38 30% 88%;
 
   --secondary-foreground: 236 38% 20%;
 
-  --muted: 290 45% 95%;
+  --muted: 38 25% 91%;
 
-  --muted-foreground: 236 18% 40%;
+  --muted-foreground: 232 15% 30%;
 
-  --accent: 330 85% 90%;
+  --accent: 34 55% 40%;
 
   --accent-foreground: 236 38% 20%;
 
@@ -133,15 +133,15 @@
 
   --destructive-foreground: 0 0% 100%;
 
-  --input: 265 30% 78%;
-  --ring: 236 52% 46%;
+  --input: 232 15% 55%;
+  --ring: 34 55% 40%;
   --chart-1: 236 52% 46%;
   --chart-2: 330 80% 70%;
   --chart-3: 270 60% 75%;
   --chart-4: 205 80% 70%;
   --chart-5: 300 50% 70%;
 
-  --app-font-sans: 'Figtree', sans-serif;
+  --app-font-sans: 'Manrope', sans-serif;
   --app-font-serif: 'Fraunces', Georgia, serif;
   --app-font-mono: Menlo, monospace;
   --radius: 0.5rem; /* 8px */
@@ -343,5 +343,5 @@
 html{scroll-behavior:smooth;scroll-padding-top:5rem}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 @keyframes drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(24px,-30px,0)}}
-.orb{animation:drift 14s ease-in-out infinite;will-change:transform}
+
 .grain::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}

@@ -22,7 +22,7 @@ export const createEnquiryBodyMessageMax = 3000;
 export const CreateEnquiryBody = zod.object({
   "name": zod.string().min(1).max(createEnquiryBodyNameMax),
   "email": zod.string().email().max(createEnquiryBodyEmailMax),
-  "service": zod.enum(['CellSonic Regeneration', 'Wolfe Non Surgical', 'Perfect Day Consults', 'General enquiry']),
+  "service": zod.enum(['CellSonic Regeneration', 'Wolfe Non Surgical', 'Perfect Day Consults', 'Reiki Healing', 'Palm Readings', 'Intuitive Tarot Readings', 'Mediumship Readings', 'Ordained Ministry', 'General enquiry']),
   "message": zod.string().min(1).max(createEnquiryBodyMessageMax),
   "consent": zod.literal(true)
 })
