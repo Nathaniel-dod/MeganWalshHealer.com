@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Spiritual in the Physical"
+description = "A one-page practitioner website featuring services, an about section, and a contact form, with pastel colours drawn from the supplied infinity logo."
+version = "1.0.0"
+id = "artifacts/spiritual-in-the-physical"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22241
+
+[services.development]
+run = "pnpm --filter @workspace/spiritual-in-the-physical run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/spiritual-in-the-physical", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/spiritual-in-the-physical/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22241"
+BASE_PATH = "/"

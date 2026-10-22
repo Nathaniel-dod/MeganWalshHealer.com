@@ -1,6 +1,6 @@
-# [Project name]
+# Spiritual in the Physical
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A one-page practitioner website introducing services and collecting general enquiries.
 
 ## Run & Operate
 
@@ -22,19 +22,27 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/spiritual-in-the-physical/` — public website.
+- `artifacts/api-server/` — enquiry submission API.
+- `lib/api-spec/openapi.yaml` — API contract.
+- `lib/db/src/schema/` — persisted enquiries.
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Enquiries are stored, not emailed. Do not imply the practitioner is notified until an actual notification flow is connected.
+- Do not collect sensitive health information in the public form.
+- Do not invent practitioner credentials, health outcomes, prices, contact details, or testimonials.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Required page sequence: hero → services → about → contact form → footer.
+- The user supplied the pastel infinity logo and named CellSonic Regeneration, Wolfe Non Surgical, and Perfect Day Consults.
+- Additional services and service details will be provided by the user. Practitioner biography is also pending; placeholder copy must stay identifiable.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Edit the website directly in Build mode rather than using the Design canvas.
+- Use the supplied logo's pastel pink, lilac, and blue direction on a light background.
 
 ## Gotchas
 

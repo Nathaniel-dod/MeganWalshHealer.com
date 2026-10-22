@@ -11,6 +11,27 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /enquiries:
+    post:
+      operationId: createEnquiry
+      summary: Save a general practitioner enquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnquiryInput"
+      responses:
+        "201":
+          description: Enquiry saved (no email notification is sent)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnquiryReceipt"
+        "400":
+          description: Invalid enquiry
+        "429":
+          description: Too many requests
   /healthz:
     get:
       operationId: healthCheck
@@ -26,6 +47,36 @@ paths:
                 $ref: "#/components/schemas/HealthStatus"
 components:
   schemas:
+    EnquiryInput:
+      type: object
+      required: [name, email, service, message, consent]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        service:
+          type: string
+          enum: [CellSonic Regeneration, Wolfe Non Surgical, Perfect Day Consults, General enquiry]
+        message:
+          type: string
+          minLength: 1
+          maxLength: 3000
+        consent:
+          type: boolean
+          enum: [true]
+    EnquiryReceipt:
+      type: object
+      required: [id, message]
+      properties:
+        id:
+          type: integer
+        message:
+          type: string
     HealthStatus:
       type: object
       properties:
