@@ -30,6 +30,7 @@ A one-page practitioner website introducing services and collecting general enqu
 ## Architecture decisions
 
 - Enquiries are stored, not emailed. Do not imply the practitioner is notified until an actual notification flow is connected.
+- The user's intended hosting destination is Cloudflare. Preserve portability; the contact API and database need a deliberate Cloudflare-compatible deployment or external backend rather than assuming a static upload includes them.
 - Do not collect sensitive health information in the public form.
 - Do not invent practitioner credentials, health outcomes, prices, contact details, or testimonials.
 
