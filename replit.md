@@ -31,6 +31,7 @@ A one-page practitioner website introducing services and collecting general enqu
 
 - Enquiries are stored, not emailed. Do not imply the practitioner is notified until an actual notification flow is connected.
 - The user's intended hosting destination is Cloudflare. Preserve portability; the contact API and database need a deliberate Cloudflare-compatible deployment or external backend rather than assuming a static upload includes them.
+- The user has chosen Web3Forms for the final contact form; Meghan will create the account. The current database-backed form has not yet been switched. Once connected, update storage/email notices to reflect Web3Forms rather than the existing local-only flow.
 - Do not collect sensitive health information in the public form.
 - Do not invent practitioner credentials, health outcomes, prices, contact details, or testimonials.
 
