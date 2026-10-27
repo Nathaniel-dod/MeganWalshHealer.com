@@ -79,6 +79,13 @@ export function seoHead(base: string, page?: (typeof LEGAL_PAGES)[number]) {
 export function seoPlugin(): Plugin {
   let config: ResolvedConfig;
   let rendered = '';
+  let intakeRendered = '';
+  const intakeHead = () => `<title>Perfect Day Consult Intake | Megan Walsh</title>
+<meta name="description" content="Client intake questionnaire for a Perfect Day consultation with Megan Walsh.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#25274f">
+<link rel="icon" type="image/svg+xml" href="${config.base}favicon.svg">`;
   const robots = () => `User-agent: *\nAllow: /\nSitemap: ${url(config.base, 'sitemap.xml')}\n`;
   const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['', ...LEGAL_PAGES.map(p => `${p.path}/`)].map(p => `<url><loc>${escape(url(config.base, p))}</loc></url>`).join('')}</urlset>`;
   return {
@@ -87,6 +94,11 @@ export function seoPlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const pathname = (req.url || '/').split('?')[0];
+        if (pathname === `${config.base}consult-intake/` || pathname === `${config.base}consult-intake`) {
+          res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+          res.setHeader('Cache-Control', 'no-store');
+          res.setHeader('Referrer-Policy', 'no-referrer');
+        }
         const page = LEGAL_PAGES.find(p => pathname === `${config.base}${p.path}/` || pathname === `${config.base}${p.path}`);
         let body: string;
         let type = 'text/html; charset=utf-8';
@@ -101,7 +113,7 @@ export function seoPlugin(): Plugin {
     },
     transformIndexHtml: {
       order: 'pre',
-      async handler(html) {
+      async handler(html, context) {
         if (config.command === 'build' && !rendered) {
           // Render real React content at build time so the static Cloudflare
           // output is readable to crawlers without executing JavaScript.
@@ -116,20 +128,42 @@ export function seoPlugin(): Plugin {
           try {
             const entry = await ssr.ssrLoadModule('/src/entry-server.tsx');
             rendered = entry.render();
+            intakeRendered = entry.render('/consult-intake/');
           } finally { await ssr.close(); }
         }
+        // Vite's SPA fallback rewrites context.path to /index.html in dev.
+        const requestPath = (context.originalUrl || context.path).split('?')[0];
+        const isIntake = requestPath.replace(/\/$/, '').endsWith('/consult-intake');
+        if (isIntake) return html.replace('<!-- SEO_HEAD -->', intakeHead());
         return html.replace('<!-- SEO_HEAD -->', seoHead(config.base))
           .replace('<div id="root"></div>', `<div id="root">${rendered}</div>`);
       },
     },
-    generateBundle() {
+    generateBundle: {
+      order: 'post',
+      handler(_options, bundle) {
+      const homepage = bundle['index.html'];
+      if (!homepage || homepage.type !== 'asset' || typeof homepage.source !== 'string' || !intakeRendered) {
+        throw new Error('Could not generate the standalone intake page.');
+      }
+      this.emitFile({
+        type: 'asset', fileName: 'consult-intake/index.html',
+        source: homepage.source.replace(seoHead(config.base), intakeHead())
+          .replace(`<div id="root">${rendered}</div>`, `<div id="root">${intakeRendered}</div>`),
+      });
       for (const page of LEGAL_PAGES) this.emitFile({
         type: 'asset', fileName: `${page.path}/index.html`,
         source: renderLegalPage(page, seoHead(config.base, page), config.base),
       });
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robots() });
       this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap() });
-      this.emitFile({ type: 'asset', fileName: '_redirects', source: LEGAL_PAGES.map(p => `${config.base}${p.path} ${config.base}${p.path}/ 301`).join('\n') + '\n' });
+      this.emitFile({ type: 'asset', fileName: '_redirects', source: [...LEGAL_PAGES.map(p => `${config.base}${p.path} ${config.base}${p.path}/ 301`), `${config.base}consult-intake ${config.base}consult-intake/ 301`].join('\n') + '\n' });
+      this.emitFile({
+        type: 'asset', fileName: '_headers',
+        source: [`${config.base}consult-intake`, `${config.base}consult-intake/*`].map(p =>
+          `${p}\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Referrer-Policy: no-referrer\n  Cache-Control: no-store\n  X-Content-Type-Options: nosniff\n`).join('\n'),
+      });
+      },
     },
   };
 }

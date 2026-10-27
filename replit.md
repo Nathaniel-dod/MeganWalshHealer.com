@@ -35,6 +35,7 @@ A one-page practitioner website introducing services and collecting general enqu
 - SEO metadata, schema, sitemap and static legal pages are generated at build time using the user-approved launch domain `https://meganwalshhealer.com`. Keep canonical links, sharing metadata, schema and sitemap consistent with this domain.
 - Privacy disclosures must follow actual processing. When connecting Web3Forms or changing tracking, update the legal content as well as the form notices. The policies are factual starter text and need the operator's legal review before launch.
 - Do not collect sensitive health information in the public form.
+- The general contact form must not solicit health details. The separate Perfect Day Consult intake is intentionally unlisted, excluded from the sitemap and marked noindex; it is not password-protected or guaranteed confidential. The user explicitly chose Web3Forms for its sensitive responses after the privacy implications were explained. Preserve the uploaded questionnaire exactly, use no browser persistence, and do not claim verified medical/HIPAA compliance or a verified special Web3Forms tier.
 - Do not invent practitioner credentials, health outcomes, prices, contact details, or testimonials.
 
 ## Product

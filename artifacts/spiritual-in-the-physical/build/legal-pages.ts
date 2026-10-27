@@ -28,13 +28,21 @@ export const LEGAL_PAGES: LegalPage[] = [
         paragraphs: [
           'When you submit the contact form, your name, email address, chosen service, message and consent are sent to Web3Forms to deliver your enquiry to Megan by email.',
           'New enquiries are not saved in this website’s project database. Web3Forms processes submissions, and Megan’s email provider handles the delivered messages. Any enquiries previously submitted through the earlier database-backed form may remain in that database.',
-          'Please do not include sensitive health or medical details in your message.',
+          'Please do not include sensitive health or medical details in the general contact form.',
+        ],
+      },
+      {
+        heading: 'Consultation intake information',
+        paragraphs: [
+          'A separate, unlisted Perfect Day Consult intake form asks for contact details and information about health history, symptoms, relationships, emotional health, lifestyle and consultation goals. Only the fields marked as required must be answered.',
+          'If you submit that intake form, its answers are sent through Web3Forms to Megan by email to help prepare for your consultation. They are not saved to this website’s project database or to browser storage. Web3Forms and the email providers process and may retain these answers under their own policies and account settings.',
+          'The intake link is not included in site navigation or the sitemap, and the page asks search engines not to index it. This is not access control: anyone with the link can open it. Do not use the form for emergencies. Contact Megan before submitting if you need a different way to share sensitive information.',
         ],
       },
       {
         heading: 'Why we use it',
         paragraphs: [
-          'We use enquiry information to respond to you and to help prevent spam and misuse of the form.',
+          'We use enquiry information to respond to you, intake information to prepare for your consultation, and technical information to help prevent spam and misuse of the forms.',
         ],
       },
       {
