@@ -1,1 +1,1 @@
-- [Future domain](domain.md) — Planned domain is meganwalshhealer.com; do not change the site until requested.
+- [Launch domain](domain.md) — User approved meganwalshhealer.com for SEO; earlier hold on applying the domain is superseded.

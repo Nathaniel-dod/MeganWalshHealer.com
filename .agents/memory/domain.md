@@ -1,9 +1,9 @@
 ---
 name: Future domain
-description: User-provided future domain and instruction not to apply it yet.
+description: User-approved domain for the Cloudflare launch.
 ---
-The new domain will be Meganwalshhealer.com. The user explicitly said not to change anything on the site when providing this domain.
+The user approved applying Meganwalshhealer.com to the SEO URLs and pushing that change to GitHub after initially providing the domain for reference only.
 
-**Why:** The user provided it for future reference only.
+**Why:** The user explicitly approved the SEO-domain update for the Cloudflare launch.
 
-**How to apply:** Use this domain when the user requests the domain migration; do not update site configuration or metadata merely because it has been provided.
+**How to apply:** Treat the earlier instruction not to apply the domain as superseded by this approval. DNS connection and live delivery testing still need to be confirmed separately; a code update alone does not verify launch.

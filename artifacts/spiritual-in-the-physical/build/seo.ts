@@ -2,9 +2,8 @@ import path from 'node:path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { LEGAL_PAGES, renderLegalPage } from './legal-pages';
 
-// Verified published URL. Update this ONE setting to the final Cloudflare
-// custom domain before building for that host; never use a development URL.
-export const SITE_ORIGIN = 'https://spiritual-in-the-physical.replit.app';
+// User-approved canonical domain for the Cloudflare launch.
+export const SITE_ORIGIN = 'https://meganwalshhealer.com';
 const TITLE = 'Megan Walsh | Spiritual in the Physical, Michigan & Online';
 const DESCRIPTION = 'Explore Wolfe Non Surgical, CellSonic, Reiki and spiritual readings with Megan Walsh. In-person services in Michigan and online consultations and readings.';
 const escape = (value: string) => value.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);

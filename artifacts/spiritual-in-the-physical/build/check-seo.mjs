@@ -15,6 +15,8 @@ for (const path of paths) {
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
   assert.ok(canonical?.startsWith('https://'), `${path}: absolute canonical`);
   assert.ok(!canonical.includes('.replit.dev'), 'No development canonical');
+  assert.equal(canonical, `https://meganwalshhealer.com/${path}`, `${path}: launch domain`);
+  assert.ok(!html.includes('spiritual-in-the-physical.replit.app'), `${path}: no old SEO origin`);
   canonicals.push(canonical);
   const schema = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(schema, `${path}: JSON-LD exists`);
@@ -37,4 +39,5 @@ assert.equal(new Set(canonicals).size, paths.length, 'Unique canonical per page'
 const sitemap = await read('sitemap.xml');
 for (const canonical of canonicals) assert.ok(sitemap.includes(`<loc>${canonical}</loc>`));
 assert.match(await read('robots.txt'), /Sitemap: https:\/\//);
+assert.ok((await read('robots.txt')).includes('Sitemap: https://meganwalshhealer.com/sitemap.xml'));
 console.log('SEO checks passed: 4 static pages, metadata, JSON-LD, canonical URLs, sitemap, footer links and prerendered services/shop.');
