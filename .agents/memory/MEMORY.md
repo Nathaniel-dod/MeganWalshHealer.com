@@ -1,0 +1,1 @@
+- [Future domain](domain.md) — Planned domain is meganwalshhealer.com; do not change the site until requested.
