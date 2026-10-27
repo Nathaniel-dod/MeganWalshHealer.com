@@ -1,7 +1,7 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Menu, X, ArrowRight, ArrowDown, ChevronDown } from 'lucide-react';
-import { useCreateEnquiry } from '@workspace/api-client-react';
+import { submitEnquiry } from '@/lib/submit-enquiry';
 
 import ShopSection from '@/components/shop-section';
 
@@ -76,7 +76,10 @@ export default function Home() {
   const [message, setMessage] = useState('');
   const [consent, setConsent] = useState(false);
   const [receipt, setReceipt] = useState<string | null>(null);
-  const mutation = useCreateEnquiry();
+  const [isPending, setIsPending] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [botcheck, setBotcheck] = useState(false);
+  const submitting = useRef(false);
   const reduce = useReducedMotion();
 
   const choose = (s: Service) => {
@@ -85,23 +88,27 @@ export default function Home() {
     document.getElementById('contact')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   };
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!consent) return;
+    if (!consent || submitting.current) return;
+    submitting.current = true;
+    setIsPending(true);
+    setIsError(false);
     setReceipt(null);
-    mutation.mutate(
-      { data: { name: name.trim(), email: email.trim(), service, message: message.trim(), consent: true } },
-      {
-        onSuccess: (r) => {
-          setReceipt(r.message);
-          setName('');
-          setEmail('');
-          setMessage('');
-          setService('General enquiry');
-          setConsent(false);
-        },
-      },
-    );
+    try {
+      await submitEnquiry({ name, email, service, message, consent, botcheck });
+      setReceipt('Thank you! Your enquiry has been sent to Megan. She will be in touch.');
+      setName('');
+      setEmail('');
+      setMessage('');
+      setService('General enquiry');
+      setConsent(false);
+    } catch {
+      setIsError(true);
+    } finally {
+      submitting.current = false;
+      setIsPending(false);
+    }
   };
 
   const field =
@@ -241,11 +248,13 @@ export default function Home() {
               <p className="mt-6 text-muted-foreground">Send a note and choose the service you are curious about. There is no obligation.</p>
               <p className="mt-4 leading-relaxed text-muted-foreground">Online: Perfect Day Consults, Mediumship Readings and Intuitive Tarot Readings. For all other services, I welcome in-person enquiries in Michigan and surrounding areas.</p>
               <p className="mt-6 rounded-md border-l-4 border-accent bg-secondary p-4 text-sm text-secondary-foreground" data-testid="text-storage-note">
-                Please note: enquiries are stored only. Email notifications are not yet connected, so a reply may not be immediate. Do not include sensitive health information.
+                Your enquiry is sent to Megan through Web3Forms. Please do not include sensitive health information.
               </p>
             </Reveal>
             <Reveal delay={0.1}>
               <form onSubmit={submit} className="space-y-5 rounded-md border-2 border-primary bg-card p-6 sm:p-8" data-testid="form-enquiry">
+                <input type="checkbox" name="botcheck" checked={botcheck} onChange={(e) => setBotcheck(e.target.checked)} className="hidden" tabIndex={-1} aria-hidden="true" autoComplete="off" />
+                <fieldset disabled={isPending} className="space-y-5">
                 <div>
                   <label htmlFor="name" className="mb-1.5 block text-sm font-semibold">Name</label>
                   <input id="name" required maxLength={120} value={name} onChange={(e) => setName(e.target.value)} className={field} data-testid="input-name" />
@@ -275,20 +284,21 @@ export default function Home() {
                 <label className="flex items-start gap-3 text-sm text-muted-foreground">
                   <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 accent-[hsl(232_45%_22%)]" data-testid="checkbox-consent" />
                   <span>
-                    I agree to my details being stored so I can be contacted about this enquiry.{' '}
+                    I agree to my details being processed to respond to this enquiry.{' '}
                     <a href={`${BASE}privacy-policy/`} className="font-semibold text-primary underline underline-offset-2" data-testid="link-consent-privacy">Privacy policy</a>
                   </span>
                 </label>
-                <button type="submit" disabled={mutation.isPending || !consent} className="w-full rounded-md bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50" data-testid="button-submit">
-                  {mutation.isPending ? 'Saving your enquiry...' : 'Send enquiry'}
+                <button type="submit" disabled={isPending || !consent} className="w-full rounded-md bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50" data-testid="button-submit">
+                  {isPending ? 'Sending your enquiry...' : 'Send enquiry'}
                 </button>
+                </fieldset>
                 <div aria-live="polite">
                   {receipt && (
                     <p className="rounded-md border-l-4 border-accent bg-secondary p-4 text-sm" data-testid="text-receipt">{receipt}</p>
                   )}
-                  {mutation.isError && (
+                  {isError && (
                     <p className="rounded-2xl bg-destructive/10 p-4 text-sm text-destructive" role="alert" data-testid="text-error">
-                      Your enquiry could not be saved. Please check the details and try again.
+                      We could not confirm your enquiry was sent. Your details are still here; please try again in a moment.
                     </p>
                   )}
                 </div>

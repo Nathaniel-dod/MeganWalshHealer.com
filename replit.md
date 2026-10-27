@@ -29,9 +29,9 @@ A one-page practitioner website introducing services and collecting general enqu
 
 ## Architecture decisions
 
-- Enquiries are stored, not emailed. Do not imply the practitioner is notified until an actual notification flow is connected.
+- The public contact form submits directly to Web3Forms for email delivery. Success requires an HTTP success and Web3Forms `success: true`; failures preserve the visitor’s fields. Do not send real test submissions until launch, as requested by the user.
 - The user's intended hosting destination is Cloudflare. Preserve portability; the contact API and database need a deliberate Cloudflare-compatible deployment or external backend rather than assuming a static upload includes them.
-- The user has chosen Web3Forms for the final contact form; Megan will create the account. The current database-backed form has not yet been switched. Once connected, update storage/email notices to reflect Web3Forms rather than the existing local-only flow.
+- Web3Forms now handles new public enquiries without the project API/database, allowing static Cloudflare hosting. Preserve the earlier enquiry database and API; do not delete historical data without permission. The public form key is intentionally client-visible; recipient routing is managed in Megan’s Web3Forms account.
 - SEO metadata, schema, sitemap and static legal pages are generated at build time. Before moving to Cloudflare, update `SITE_ORIGIN` in the frontend's `build/seo.ts` to the final custom domain and rebuild; it currently uses the verified published Replit URL.
 - Privacy disclosures must follow actual processing. When connecting Web3Forms or changing tracking, update the legal content as well as the form notices. The policies are factual starter text and need the operator's legal review before launch.
 - Do not collect sensitive health information in the public form.

@@ -26,8 +26,8 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: 'Information you send us',
         paragraphs: [
-          'When you submit the contact form, the site stores your name, email address, chosen service, message, and your confirmation that you agree to your details being stored.',
-          'This information is saved in the project backend database. No email notification system is currently connected, so a reply may not be immediate. A form service (Web3Forms) is planned but is not active.',
+          'When you submit the contact form, your name, email address, chosen service, message and consent are sent to Web3Forms to deliver your enquiry to Megan by email.',
+          'New enquiries are not saved in this website’s project database. Web3Forms processes submissions, and Megan’s email provider handles the delivered messages. Any enquiries previously submitted through the earlier database-backed form may remain in that database.',
           'Please do not include sensitive health or medical details in your message.',
         ],
       },
@@ -38,9 +38,9 @@ export const LEGAL_PAGES: LegalPage[] = [
         ],
       },
       {
-        heading: 'Technical data, hosting and rate limiting',
+        heading: 'Technical data and hosting',
         paragraphs: [
-          'To limit repeated submissions, the server uses your IP address in server memory. Our hosting provider may also log requests to the site.',
+          'Our hosting provider may log requests to the site. Web3Forms receives technical request data, such as your IP address, when you submit the form and may use it to prevent spam and abuse.',
           'No custom analytics or advertising pixels have been implemented on this site.',
         ],
       },
@@ -54,13 +54,13 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: 'Service providers',
         paragraphs: [
-          'Information may be handled by service providers that supply hosting and data storage for the site.',
+          'Information may be handled by providers supplying hosting, Web3Forms form processing, and email delivery and storage. Web3Forms handles submissions under its privacy policy at https://web3forms.com/privacy.',
         ],
       },
       {
         heading: 'Retention',
         paragraphs: [
-          'Enquiries are kept for as long as needed to handle your enquiry and for any legal needs.',
+          'Enquiries in Megan’s mailbox and any earlier website database records are kept for as long as needed to handle your enquiry and for legal needs. Web3Forms may also retain submissions under its own policies and account settings; its published default retention is three years, with shorter retention settings available.',
         ],
       },
       {
@@ -72,7 +72,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: 'Changes to this policy',
         paragraphs: [
-          'This policy will be updated when the way information is processed changes, for example when email notifications or a form service are connected.',
+          'This policy will be updated when the way information is processed changes.',
         ],
       },
     ],
